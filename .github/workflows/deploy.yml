@@ -52,5 +52,5 @@ jobs:
             docker rm --force provaf
             docker run -d -p 8080:8080 --name provaf \
             --network rede \
-            -e DB_HOST=auladb \
+            -e DB_HOST=postgres-aula \
             hector0/provaf:${{ github.sha }}
