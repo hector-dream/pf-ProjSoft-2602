@@ -14,25 +14,25 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/avaliacoes")
-public class AvaliacaoController {
-    private final AvaliacaoService service;
+@RequestMapping("/artigos")
+public class ArtigoController {
+    private final ArtigoService service;
     private final Validator validator;
     private final String emailClaim;
 
     // FILA: descomente este campo e use o construtor alternativo abaixo.
-    // private final AvaliacaoFilaProducer filaProducer;
+    // private final ArtigoFilaProducer filaProducer;
 
-    public AvaliacaoController(AvaliacaoService service, Validator validator,
-            @Value("${auth0.email-claim}") String emailClaim) {
+    public ArtigoController(ArtigoService service, Validator validator,
+                            @Value("${auth0.email-claim}") String emailClaim) {
         this.service = service;
         this.validator = validator;
         this.emailClaim = emailClaim;
     }
 
     // FILA: comente o construtor atual inteiro e descomente este bloco.
-    // public AvaliacaoController(AvaliacaoService service, Validator validator,
-    //         @Value("${auth0.email-claim}") String emailClaim, AvaliacaoFilaProducer filaProducer) {
+    // public ArtigoController(ArtigoService service, Validator validator,
+    //         @Value("${auth0.email-claim}") String emailClaim, ArtigoFilaProducer filaProducer) {
     //     this.service = service;
     //     this.validator = validator;
     //     this.emailClaim = emailClaim;
@@ -43,8 +43,8 @@ public class AvaliacaoController {
     // FILA: troque CREATED por ACCEPTED (202: aceitou para processamento, ainda não salvou).
     @ResponseStatus(HttpStatus.CREATED)
     // FILA: comente a assinatura abaixo e descomente esta alternativa; mantenha a linha do Jwt.
-    // public java.util.Map<String, String> cadastrar(@Valid @RequestBody CriarAvaliacaoRequest request,
-    public Avaliacao cadastrar(@Valid @RequestBody CriarAvaliacaoRequest request,
+    // public java.util.Map<String, String> cadastrar(@Valid @RequestBody CriarArtigoRequest request,
+    public Artigo cadastrar(@Valid @RequestBody CriarArtigoRequest request,
             @AuthenticationPrincipal Jwt jwt) {
         String email = jwt.getClaimAsString(emailClaim);
         if (email == null) {
@@ -61,12 +61,12 @@ public class AvaliacaoController {
     }
 
     @GetMapping
-    public List<Avaliacao> listar() {
+    public List<Artigo> listar() {
         return service.listar();
     }
 
     @GetMapping("/{id}")
-    public Avaliacao buscarPorId(@PathVariable Long id) {
+    public Artigo buscarPorId(@PathVariable Long id) {
         return service.buscarPorId(id);
     }
 
@@ -77,7 +77,7 @@ public class AvaliacaoController {
     }
 
     @PatchMapping("/{id}/status")
-    public Avaliacao atualizarStatus(@PathVariable Long id,
+    public Artigo atualizarStatus(@PathVariable Long id,
             @Valid @RequestBody AtualizarStatusRequest request) {
         return service.atualizarStatus(id, request);
     }

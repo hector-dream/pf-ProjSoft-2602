@@ -31,10 +31,10 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/avaliacoes").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/avaliacoes", "/avaliacoes/{id}").hasAnyRole("ADMIN", "USER")
-                        .requestMatchers(HttpMethod.DELETE, "/avaliacoes/{id}").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PATCH, "/avaliacoes/{id}/status").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/artigos").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/artigos", "/artigos/{id}").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers(HttpMethod.DELETE, "/artigos/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/artigos/{id}/status").hasRole("ADMIN")
                         .anyRequest().denyAll())
                 .oauth2ResourceServer(oauth -> oauth.jwt(jwt -> jwt.jwtAuthenticationConverter(converter)))
                 .build();

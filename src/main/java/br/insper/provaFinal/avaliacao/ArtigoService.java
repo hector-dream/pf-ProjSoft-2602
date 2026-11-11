@@ -8,20 +8,20 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class AvaliacaoService {
-    private final AvaliacaoRepository repository;
+public class ArtigoService {
+    private final ArtigoRepository repository;
 
-    public AvaliacaoService(AvaliacaoRepository repository) {
+    public ArtigoService(ArtigoRepository repository) {
         this.repository = repository;
     }
 
     @Transactional
-    public Avaliacao cadastrar(CriarAvaliacaoRequest request, String emailAvaliador) {
-        return repository.save(new Avaliacao(emailAvaliador, request));
+    public Artigo cadastrar(CriarArtigoRequest request, String emailAvaliador) {
+        return repository.save(new Artigo(emailAvaliador, request));
     }
 
     @Transactional(readOnly = true)
-    public Avaliacao buscarPorId(Long id) {
+    public Artigo buscarPorId(Long id) {
         // SOFT DELETE (3/3): troque apenas repository.findById(id) na linha abaixo por
         // repository.findByIdAndExcluidaFalse(id). Mantenha o orElseThrow para retornar 404.
         return repository.findById(id).orElseThrow(() ->
@@ -29,8 +29,8 @@ public class AvaliacaoService {
     }
 
     @Transactional
-    public Avaliacao atualizarStatus(Long id, AtualizarStatusRequest request) {
-        Avaliacao avaliacao = buscarPorId(id);
+    public Artigo atualizarStatus(Long id, AtualizarStatusRequest request) {
+        Artigo avaliacao = buscarPorId(id);
         avaliacao.alterarStatus(request.status());
         return repository.save(avaliacao);
     }
@@ -41,15 +41,15 @@ public class AvaliacaoService {
         repository.delete(buscarPorId(id));
 
         // SOFT DELETE: descomente as três linhas abaixo após os passos na entidade e repository.
-        // Avaliacao avaliacao = buscarPorId(id);
+        // Artigo avaliacao = buscarPorId(id);
         // avaliacao.marcarComoExcluida();
         // repository.save(avaliacao);
     }
 
     @Transactional(readOnly = true)
-    public List<Avaliacao> listar() {
+    public List<Artigo> listar() {
         // SOFT DELETE: comente o return ativo e descomente o return abaixo.
-        // return repository.findAllByExcluidaFalse(Sort.by(Sort.Direction.DESC, "dataAvaliacao", "id"));
-        return repository.findAll(Sort.by(Sort.Direction.DESC, "dataAvaliacao", "id"));
+        // return repository.findAllByExcluidaFalse(Sort.by(Sort.Direction.DESC, "dataArtigo", "id"));
+        return repository.findAll(Sort.by(Sort.Direction.DESC, "dataArtigo", "id"));
     }
 }
