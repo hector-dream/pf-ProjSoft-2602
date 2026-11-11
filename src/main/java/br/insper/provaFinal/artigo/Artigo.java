@@ -40,16 +40,6 @@ public class Artigo {
         this.status = status;
     }
 
-    // SOFT DELETE (1/3): descomente o campo e o método abaixo.
-    // O default false também preenche registros antigos ao criar a coluna no PostgreSQL.
-    // JsonIgnore impede que o campo interno apareça no JSON da API.
-    // @com.fasterxml.jackson.annotation.JsonIgnore
-    // @Column(nullable = false, columnDefinition = "boolean default false")
-    // private boolean excluida = false;
-    //
-    // public void marcarComoExcluida() {
-    //     this.excluida = true;
-    // }
 
     public Artigo(String emailAvaliador, CriarArtigoRequest request) {
         this.emailCriador = emailAvaliador;

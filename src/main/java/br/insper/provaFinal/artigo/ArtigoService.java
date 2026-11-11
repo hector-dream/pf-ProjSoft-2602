@@ -22,10 +22,8 @@ public class ArtigoService {
 
     @Transactional(readOnly = true)
     public Artigo buscarPorId(Long id) {
-        // SOFT DELETE (3/3): troque apenas repository.findById(id) na linha abaixo por
-        // repository.findByIdAndExcluidaFalse(id). Mantenha o orElseThrow para retornar 404.
         return repository.findById(id).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Avaliação não encontrada."));
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Artigo não encontrado."));
     }
 
     @Transactional
@@ -37,19 +35,12 @@ public class ArtigoService {
 
     @Transactional
     public void excluir(Long id) {
-        // HARD DELETE (ativo): remova/comente esta linha para ativar a alternativa abaixo.
         repository.delete(buscarPorId(id));
 
-        // SOFT DELETE: descomente as três linhas abaixo após os passos na entidade e repository.
-        // Artigo avaliacao = buscarPorId(id);
-        // avaliacao.marcarComoExcluida();
-        // repository.save(avaliacao);
     }
 
     @Transactional(readOnly = true)
     public List<Artigo> listar() {
-        // SOFT DELETE: comente o return ativo e descomente o return abaixo.
-        // return repository.findAllByExcluidaFalse(Sort.by(Sort.Direction.DESC, "dataArtigo", "id"));
-        return repository.findAll(Sort.by(Sort.Direction.DESC, "dataArtigo", "id"));
+        return repository.findAll(Sort.by(Sort.Direction.DESC, "dataAvaliacao", "id"));
     }
 }
