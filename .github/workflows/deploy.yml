@@ -1,6 +1,7 @@
 name: Java CI with Maven
 
 on:
+  workflow_dispatch:
   push:
     branches: [ "master" ]
 
@@ -48,9 +49,13 @@ jobs:
           key: ${{ secrets.KEY_TEST }}
           port: 22
           script: |
-            docker stop provaf
-            docker rm --force provaf
+            set -e
+            docker pull hector0/provaf:${{ github.sha }}
+            docker stop provaf || true
+            docker rm --force provaf || true
             docker run -d -p 8080:8080 --name provaf \
+            --restart unless-stopped \
             --network rede \
             -e DB_HOST=postgres-aula \
+            -e CORS_ALLOWED_ORIGINS='${{ vars.CORS_ALLOWED_ORIGINS || 'http://localhost:5173,http://localhost:3000,https://front-pf-projsoft-262.vercel.app' }}' \
             hector0/provaf:${{ github.sha }}

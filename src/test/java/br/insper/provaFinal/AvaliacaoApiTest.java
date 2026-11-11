@@ -90,6 +90,26 @@ class AvaliacaoApiTest {
         assertThat(repository.count()).isZero();
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"GET", "POST", "PATCH", "DELETE"})
+    void corsAceitaFrontPublicado(String metodo) throws Exception {
+        mvc.perform(options("/avaliacoes/1/status")
+                        .header("Origin", "https://front-pf-projsoft-262.vercel.app")
+                        .header("Access-Control-Request-Method", metodo)
+                        .header("Access-Control-Request-Headers", "authorization,content-type"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("Access-Control-Allow-Origin",
+                        "https://front-pf-projsoft-262.vercel.app"));
+    }
+
+    @Test
+    void corsRejeitaOutraOrigem() throws Exception {
+        mvc.perform(options("/avaliacoes")
+                        .header("Origin", "https://origem-nao-autorizada.example")
+                        .header("Access-Control-Request-Method", "POST"))
+                .andExpect(status().isForbidden());
+    }
+
     @Test
     void semTokenRetorna401() throws Exception {
         mvc.perform(get("/avaliacoes")).andExpect(status().isUnauthorized());

@@ -157,7 +157,11 @@ $env:AUTH0_AUDIENCE = 'https://prova-api'
 O banco `auladb` deve existir no PostgreSQL, porta 5432. O Hibernate cria/atualiza a tabela
 `avaliacoes` com a configuração já existente do projeto. A API atende na porta 8080.
 Para outra origem do front, defina `CORS_ALLOWED_ORIGINS` (origens separadas por vírgulas).
-No deploy, passe as mesmas variáveis Auth0 ao contêiner; o workflow atual só passa `DB_HOST`.
+No deploy, os valores Auth0 padrão já correspondem ao tenant e à audience deste projeto.
+O workflow passa `DB_HOST` e a Variable do GitHub `CORS_ALLOWED_ORIGINS` ao contêiner.
+Defina essa Variable com as origens local e da Vercel, separadas por vírgula e sem barra final.
+Se precisar sobrescrever os valores Auth0 no servidor, passe as variáveis correspondentes
+ao contêiner. O README do front detalha a configuração conjunta e os dados pendentes.
 
 Exemplo no PowerShell após obter um access token pelo login:
 
