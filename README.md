@@ -104,6 +104,14 @@ Mantenha a verificação de 404 no GET e acrescente uma consulta à listagem par
 que a avaliação excluída não aparece. Os métodos herdados `findById` e `findAll` continuam
 enxergando os registros excluídos; nas consultas da API, use os métodos com `ExcluidaFalse`.
 
+## Alternativa de cadastro por fila (comentada)
+
+O cadastro direto continua ativo. Há uma alternativa com RabbitMQ comentada nas
+classes `AvaliacaoFila*`, no controller, no pom e nas propriedades.
+Veja [FILA.md](FILA.md) para ativar producer/consumer, subir o broker, trocar o POST
+de 201 para 202 e adaptar o front e os testes. Não basta trocar apenas o return:
+o RabbitMQ precisa estar rodando e a configuração deve ser ativada em conjunto.
+
 ## Configurar o Auth0
 
 1. Crie uma API no Auth0, com Identifier `https://prova-api` e assinatura RS256.

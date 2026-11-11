@@ -20,6 +20,9 @@ public class AvaliacaoController {
     private final Validator validator;
     private final String emailClaim;
 
+    // FILA: descomente este campo e use o construtor alternativo abaixo.
+    // private final AvaliacaoFilaProducer filaProducer;
+
     public AvaliacaoController(AvaliacaoService service, Validator validator,
             @Value("${auth0.email-claim}") String emailClaim) {
         this.service = service;
@@ -27,8 +30,20 @@ public class AvaliacaoController {
         this.emailClaim = emailClaim;
     }
 
+    // FILA: comente o construtor atual inteiro e descomente este bloco.
+    // public AvaliacaoController(AvaliacaoService service, Validator validator,
+    //         @Value("${auth0.email-claim}") String emailClaim, AvaliacaoFilaProducer filaProducer) {
+    //     this.service = service;
+    //     this.validator = validator;
+    //     this.emailClaim = emailClaim;
+    //     this.filaProducer = filaProducer;
+    // }
+
     @PostMapping
+    // FILA: troque CREATED por ACCEPTED (202: aceitou para processamento, ainda não salvou).
     @ResponseStatus(HttpStatus.CREATED)
+    // FILA: comente a assinatura abaixo e descomente esta alternativa; mantenha a linha do Jwt.
+    // public java.util.Map<String, String> cadastrar(@Valid @RequestBody CriarAvaliacaoRequest request,
     public Avaliacao cadastrar(@Valid @RequestBody CriarAvaliacaoRequest request,
             @AuthenticationPrincipal Jwt jwt) {
         String email = jwt.getClaimAsString(emailClaim);
@@ -39,7 +54,10 @@ public class AvaliacaoController {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN,
                     "O access token deve conter o e-mail do avaliador.");
         }
+        // CADASTRO DIRETO (ativo). FILA: comente este return e descomente as duas linhas abaixo.
         return service.cadastrar(request, email);
+        // filaProducer.enviar(request, email);
+        // return java.util.Map.of("mensagem", "Avaliação enviada para processamento.");
     }
 
     @GetMapping
