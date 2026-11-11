@@ -32,8 +32,7 @@ Corpo do POST:
 `emailAvaliado` deve ser um e-mail válido de até 255 caracteres; `comentarios` é obrigatório
 e aceita até 4000 caracteres. A nota é obrigatória, entre 0 e 10 inclusive, com até duas casas decimais.
 O servidor gera `id` e `dataAvaliacao` (UTC). O `emailAvaliador` vem do token autenticado:
-não deve ser enviado no corpo. Por isso o POST exige um e-mail válido no token.
-
+não deve ser enviado no corpo.
 Exemplo de resposta:
 
 ```json
