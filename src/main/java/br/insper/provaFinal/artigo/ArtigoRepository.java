@@ -1,4 +1,4 @@
-package br.insper.provaFinal.avaliacao;
+package br.insper.provaFinal.artigo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

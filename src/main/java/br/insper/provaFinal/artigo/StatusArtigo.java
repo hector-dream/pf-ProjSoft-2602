@@ -1,4 +1,4 @@
-package br.insper.provaFinal.avaliacao;
+package br.insper.provaFinal.artigo;
 
 public enum StatusArtigo {
     MAXIMA,

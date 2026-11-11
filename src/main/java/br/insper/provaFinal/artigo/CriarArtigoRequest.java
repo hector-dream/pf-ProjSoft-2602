@@ -1,4 +1,4 @@
-package br.insper.provaFinal.avaliacao;
+package br.insper.provaFinal.artigo;
 
 import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
